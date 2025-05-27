@@ -1,0 +1,138 @@
+/* === Container Setup === */
+.search-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 1000px;
+}
+
+/* === Search Line Layouts === */
+.search-line-1,
+.search-line-2,
+.search-line-3 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* === Title + Button Styling === */
+.search-title-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.search-title {
+    width: 100%;
+    padding-right: 2.5rem; /* Space for the icon */
+}
+
+.search-submit {
+    position: absolute;
+    top: 50%;
+    right: 0.1rem;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.search-submit svg {
+    width: 1rem;
+    height: 1rem;
+    fill: #555;
+}
+
+/* === Search Modes === */
+.search-modes {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    margin-bottom: 5px;
+}
+
+.search-mode,
+.mode {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #888;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    margin-right: 6px;
+    margin-left: 20px;
+}
+
+.search-mode:checked::before,
+.mode:checked::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #333;
+}
+
+.search-modes label {
+    margin-top: 3px;
+    font-size: 0.95rem;
+    color: #333;
+    cursor: pointer;
+    user-select: none;
+}
+
+
+/* === Text Inputs === */
+.text-input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 140px;
+}
+
+/* === Styled Selects === */
+.search-language,
+.search-sort {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: white;
+    min-width: 160px;
+    max-width: 160px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* === Year Inputs === */
+.search-publish-year-first {
+    width: 100px;
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* === Add Dash between Year Fields === */
+
+.year-separator {
+    margin: 0 0.25rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #444;
+}

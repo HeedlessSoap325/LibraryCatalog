@@ -1,0 +1,23 @@
+.search-wrapper {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+}
+
+.book-wrapper{
+    padding: 10px;
+}
+
+.book{
+    margin-top: 10px;
+}
+
+.hits-wrapper{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.hits-num{
+    font-family: Arial, sans-serif;
+}
