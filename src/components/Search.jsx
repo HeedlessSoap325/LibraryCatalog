@@ -2,7 +2,6 @@ import {useState} from "react";
 import {getCodeFromLanguage, getLanguages} from "../JS/LanguageUtils.js";
 import "../css/Search.css";
 import SimpleInput from "./SimpleInput.jsx";
-import data from "../testdata.json";
 
 export default function Search({setData}){
     const [searchParams, setSearchParams] = useState({
