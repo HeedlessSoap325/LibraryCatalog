@@ -18,17 +18,17 @@ export default function Search({setData}){
         ebooks_only: false
     })
 
-    function query(e){
+    async function query(e){
         e.preventDefault();
         let query_string = generateQuery();
-        console.log(query_string);
 
-        let response = data; //TODO query openlibrary.org
+        let response = await fetch(`https://openlibrary.org/search.json?${query_string}`);
+        let response_data = await response.json();
 
         let clearedData = {};
-        clearedData["numFound"] = response["numFound"];
+        clearedData["numFound"] = response_data["numFound"];
 
-        clearedData["docs"] = response.docs.map(doc => ({
+        clearedData["docs"] = response_data.docs.map(doc => ({
             author_name: doc.author_name,
             cover_i: doc.cover_i,
             edition_count: doc.edition_count,
