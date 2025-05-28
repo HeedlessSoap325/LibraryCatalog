@@ -85,7 +85,7 @@ export default function Search({setData}){
                     <SimpleInput value={searchParams.place} func={"Place"} params={searchParams} setter={setSearchParams} required={false}/>
                     <SimpleInput value={searchParams.subject} func={"Subject"} params={searchParams} setter={setSearchParams} required={false}/>
                     <select className={"search-language"} value={searchParams.language} onChange={(e) => setSearchParams({...searchParams, language: e.target.value})}>
-                        <option key={"default"} value={""}>Language</option>
+                        <option key={"default"} value={""}>All</option>
                         {getLanguages().map(language => (
                             <option key={language} value={language}>{language}</option>
                         ))}
