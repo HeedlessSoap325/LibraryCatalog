@@ -6,3 +6,5 @@ P:
 
 E:
     ![img.png](e.png)
+
+R: (geschrieben von Laurens Spitzer)

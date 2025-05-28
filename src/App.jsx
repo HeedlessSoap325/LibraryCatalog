@@ -8,6 +8,7 @@ export default function App() {
     return (
     <>
         {/*
+            Testdata:
             <div className={"book-wrapper"}>
               <Book
                 title={"Harry Potter and the Philosopher's Stone"}
