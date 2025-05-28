@@ -1,4 +1,4 @@
-const languageNameToCode = {
+const languageNameToCode= {
     "English": "eng",
     "German": "ger",
     "French": "fre",

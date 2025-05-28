@@ -99,7 +99,7 @@ export default function Search({setData}){
                     <span className="year-separator">–</span>
                     <input className={"search-publish-year-first"} type={"text"} placeholder={"Upper Bound"} value={searchParams.publish_year_last} onChange={(e) => setSearchParams({...searchParams, publish_year_last: Number(e.target.value)})}/>
                 </div>
-
+                <button className="search-button-big" type={"submit"}>Search</button>
                 <select className={"search-sort"} defaultValue={""} onChange={(e) => setSearchParams({...searchParams, sort_option: e.target.value})}>
                     <option value={""}>Relevance</option>
                     <option value={"new"}>Newest</option>

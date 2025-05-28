@@ -1,4 +1,5 @@
 import "../css/Book.css";
+import {getLanguageFromCode} from "../JS/LanguageUtils.js";
 
 export default function Book({title, author, first_published, editions, cover_id, languages}){
     return(
@@ -15,7 +16,7 @@ export default function Book({title, author, first_published, editions, cover_id
                 <p className={"book-languages-text"}>Available Languages:</p>
                 <div className="book-languages-list">
                     {languages !== undefined ? languages.map(language => (
-                        <p className={"book-language"}>{language}</p>
+                        <p className={"book-language"}>{getLanguageFromCode(language)}</p>
                     )) : "Not Available"}
                 </div>
             </div>
