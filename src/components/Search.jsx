@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {getCodeFromLanguage, getLanguages} from "../JS/LanguageUtils.js";
 import "../css/Search.css";
 import SimpleInput from "./SimpleInput.jsx";
@@ -17,25 +17,61 @@ export default function Search({setData}){
         ebooks_only: false
     })
 
-    async function query(e){
+    function mkTitleISBN(isbn) {
+        setSearchParams({...searchParams, title: "isbn_" + isbn})
+    }
+
+    const [isbn, setIsbn] = useState("")
+    const [searchWithIsbn, setSearchWithIsbn] = useState(false);
+    const [searchWithTitle, setSearchWithTitle] = useState(true);
+
+    const [displayTitle, setDisplayTitle] = useState("")
+
+    useEffect(() => {
+        if (isbn === "") {
+            setSearchWithIsbn(false);
+            setSearchWithTitle(true);
+            if (searchParams.title.startsWith("isbn_")) {
+                setSearchParams({...searchParams, title: ""})
+                setDisplayTitle("");
+            } else {
+                setDisplayTitle(searchParams.title);
+            }
+        } else {
+            setSearchWithIsbn(true);
+            setSearchWithTitle(false);
+            setDisplayTitle("");
+        }
+    },[isbn, searchParams.title, searchParams]);
+    async function query(e) {
         e.preventDefault();
-        let query_string = generateQuery();
+        if (searchParams.title === "*" && searchParams.author === "") {
+            alert("Cannot use * as a search Parameter without specifying an author.");
+        } else {
 
-        let response = await fetch(`https://openlibrary.org/search.json?${query_string}`);
-        let response_data = await response.json();
+            if(isbn !== "") {
+                setSearchParams({...searchParams, title: ""})
+                mkTitleISBN(isbn)
+            }
 
-        let clearedData = {};
-        clearedData["numFound"] = response_data["numFound"];
+            let query_string = generateQuery();
 
-        clearedData["docs"] = response_data.docs.map(doc => ({
-            author_name: doc.author_name,
-            cover_i: doc.cover_i,
-            edition_count: doc.edition_count,
-            first_publish_year: doc.first_publish_year,
-            language: doc.language,
-            title: doc.title
-        }));
-        setData(clearedData);
+            let response = await fetch(`https://openlibrary.org/search.json?${query_string}`);
+            let response_data = await response.json();
+
+            let clearedData = {};
+            clearedData["numFound"] = response_data["numFound"];
+
+            clearedData["docs"] = response_data.docs.map(doc => ({
+                author_name: doc.author_name,
+                cover_i: doc.cover_i,
+                edition_count: doc.edition_count,
+                first_publish_year: doc.first_publish_year,
+                language: doc.language,
+                title: doc.title
+            }));
+            setData(clearedData);
+        }
     }
 
     function generateQuery(){
@@ -64,7 +100,7 @@ export default function Search({setData}){
             <form className={"search-form"} onSubmit={(e) => query(e)}>
                 <div className={"search-line-1"}>
                     <div className={"search-title-wrapper"}>
-                        <SimpleInput required={true} value={searchParams.title} func={"Title"} params={searchParams} setter={setSearchParams}/>
+                        <SimpleInput required={searchWithTitle} value={displayTitle} func={"Title"} params={searchParams} setter={setSearchParams}/>
                         <button className={"search-submit"} type={"submit"}>
                             <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                 <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
@@ -95,6 +131,7 @@ export default function Search({setData}){
 
                 <div className={"search-line-3"}>
                     <SimpleInput value={searchParams.author} func={"Author"} params={searchParams} setter={setSearchParams} required={false}/>
+                    <input className={"text-input"} type={"text"} placeholder={"ISBN"} required={searchWithIsbn} value={isbn} onChange={(e) => setIsbn(e.target.value)}/>
                     <input className={"search-publish-year-first"} type={"text"} placeholder={"Lower Bound"} value={searchParams.publish_year_first} onChange={(e) => setSearchParams({...searchParams, publish_year_first: Number(e.target.value)})}/>
                     <span className="year-separator">–</span>
                     <input className={"search-publish-year-first"} type={"text"} placeholder={"Upper Bound"} value={searchParams.publish_year_last} onChange={(e) => setSearchParams({...searchParams, publish_year_last: Number(e.target.value)})}/>
