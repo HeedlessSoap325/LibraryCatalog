@@ -17,9 +17,7 @@ export default function Search({setData}){
         ebooks_only: false
     })
 
-    function mkTitleISBN(isbn) {
-        setSearchParams({...searchParams, title: "isbn_" + isbn})
-    }
+
 
     const [isbn, setIsbn] = useState("")
     const [searchWithIsbn, setSearchWithIsbn] = useState(false);
@@ -49,9 +47,9 @@ export default function Search({setData}){
             alert("Cannot use * as a search Parameter without specifying an author.");
         } else {
 
-            if(isbn !== "") {
-                setSearchParams({...searchParams, title: ""})
-                mkTitleISBN(isbn)
+            if (isbn !== "") {
+                const updated = {...searchParams, title: "isbn_" + isbn};
+                setSearchParams(updated);
             }
 
             let query_string = generateQuery();
